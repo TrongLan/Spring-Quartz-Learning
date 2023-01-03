@@ -1,0 +1,29 @@
+spring:
+    datasource:
+        password: 08122001
+        url: jdbc:postgresql://localhost:5432/SpringQuartzDB
+        username: postgres
+    jpa:
+        hibernate:
+            ddl-auto: update
+        show-sql: true
+    quartz:
+        jdbc:
+            initialize-schema: always
+        job-store-type: jdbc
+        properties:
+            org:
+                quartz:
+                    jobStore:
+                        class: org.quartz.impl.jdbcjobstore.JobStoreTX
+                        dataSource: dtlDS
+                        driverDelegateClass: org.quartz.impl.jdbcjobstore.PostgreSQLDelegate
+                    dataSource:
+                        dtlDS:
+                            driver: org.postgresql.Driver
+                            URL: jdbc:postgresql://localhost:5432/SpringQuartzDB
+                            user: postgres
+                            password: 08122001
+                quarzt:
+                    threadPool:
+                        threadCount: 5
