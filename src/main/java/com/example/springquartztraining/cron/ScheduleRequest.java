@@ -11,8 +11,7 @@ public class ScheduleRequest {
   private CronField second;
   private CronField minute;
   private CronField hour;
-  private CronField dayOfMonth;
+  private CronField day;
   private CronField month;
-  private CronField dayOfWeek;
   private CronField year;
 }

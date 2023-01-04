@@ -39,7 +39,7 @@ public class JobController {
               .forJob(jobName)
               .withSchedule(cronSchedule("*/5 * * ? * *"))
               .build();
-//      CronTrigger cronTrigger = newTrigger().forJob(jobDetail).withSchedule(new CronExpression("0 0 0 * * *").)
+//      CronTrigger cronTrigger = newTrigger().forJob(jobDetail).withSchedule(new MyCronExpression("0 0 0 * * *").)
       if (scheduled.equals("ON")) {
         if (!scheduler.checkExists(JobKey.jobKey(jobName)))
           scheduler.scheduleJob(jobDetail, trigger);
