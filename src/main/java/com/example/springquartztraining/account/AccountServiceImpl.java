@@ -6,6 +6,8 @@ import org.modelmapper.ModelMapper;
 import org.quartz.*;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -28,17 +30,21 @@ public class AccountServiceImpl implements AccountService, Job {
   }
 
   @Override
-  public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-    Trigger trigger = jobExecutionContext.getTrigger();
-    System.out.println(
-        String.format(
-            "Job name: %s, Execute time: %s",
-            trigger.getJobKey().getName(), trigger.getPreviousFireTime().toString()));
+  public void execute(JobExecutionContext jobExecutionContext) {
+    //    Trigger trigger = jobExecutionContext.getTrigger();
+    //    log.info(
+    //        String.format(
+    //            "Job name: %s, Execute time: %s",
+    //            trigger.getJobKey().getName(), trigger.getPreviousFireTime().toString()));
 
     //    JobDataMap mergedJobDataMap = jobExecutionContext.getMergedJobDataMap();
     //    List<AccountInfo> accountInfos = (List<AccountInfo>)
     // mergedJobDataMap.get("account-info-list");
     //    accountInfos.forEach(accountInfo -> log.info(accountInfo.toString()));
     //    log.info("---------------------------------------------------------");
+
+    log.info(
+        "Job executed at {}",
+        LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss")));
   }
 }
