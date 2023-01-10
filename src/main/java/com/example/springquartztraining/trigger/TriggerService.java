@@ -2,7 +2,6 @@ package com.example.springquartztraining.trigger;
 
 import com.example.springquartztraining.exception.LanDTException;
 import org.quartz.SchedulerException;
-import org.quartz.Trigger;
 
 import java.util.List;
 
@@ -12,7 +11,10 @@ public interface TriggerService {
   void pauseTrigger(String triggerName, String triggerGroup)
       throws SchedulerException, LanDTException;
 
-  List<? extends Trigger> getAllTriggersOfJob(String jobName, String jobGroup)
+  void resumeTrigger(String triggerName, String triggerGroup)
+      throws SchedulerException, LanDTException;
+
+  List<TriggerDetailsDTO> getAllTriggersOfJob(String jobName, String jobGroup)
       throws SchedulerException, LanDTException;
 
   void deleteTrigger(String triggerName, String triggerGroup)

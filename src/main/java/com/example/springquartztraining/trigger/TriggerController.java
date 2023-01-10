@@ -39,6 +39,19 @@ public class TriggerController {
     }
     return new ResponseEntity<>(HttpStatus.OK);
   }
+  @GetMapping(value = "/resume-trigger/{name}/{group}")
+  public ResponseEntity<Object> resumeTrigger(
+      @PathVariable String name, @PathVariable String group) {
+    try {
+      triggerService.resumeTrigger(name, group);
+    } catch (LanDTException e) {
+
+      return new ResponseEntity<>(e.errorMessage(), HttpStatus.BAD_REQUEST);
+    } catch (Exception e) {
+      return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    return new ResponseEntity<>(HttpStatus.OK);
+  }
 
   @GetMapping(value = "/triggers-of-job/{name}/{group}")
   public ResponseEntity<Object> getAllTriggersOfJob(

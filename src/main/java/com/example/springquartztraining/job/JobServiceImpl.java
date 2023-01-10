@@ -1,9 +1,7 @@
 package com.example.springquartztraining.job;
 
 import com.example.springquartztraining.exception.LanDTException;
-import com.example.springquartztraining.trigger.TriggerDTO;
-import com.example.springquartztraining.utils.ExeceptionUtils;
-import com.example.springquartztraining.utils.Utils;
+import com.example.springquartztraining.utils.ExceptionUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
@@ -26,9 +24,9 @@ public class JobServiceImpl implements JobService {
       throws LanDTException, SchedulerException, ClassNotFoundException {
     if (scheduler.checkExists(JobKey.jobKey(dto.getJobName(), dto.getJobGroup())))
       throw new LanDTException(
-          ExeceptionUtils.JOB_ALREADY_EXIST,
+          ExceptionUtils.JOB_ALREADY_EXIST,
           String.format(
-              ExeceptionUtils.message.get(ExeceptionUtils.JOB_ALREADY_EXIST),
+              ExceptionUtils.message.get(ExceptionUtils.JOB_ALREADY_EXIST),
               dto.getJobName(),
               dto.getJobGroup()));
     Class<? extends Job> type = (Class<? extends Job>) Class.forName(dto.getClassType());
@@ -55,5 +53,25 @@ public class JobServiceImpl implements JobService {
       }
     }
     return dtos;
+  }
+
+  @Override
+  public void deleteJob(String name, String group) throws LanDTException, SchedulerException {
+    if (!scheduler.checkExists(JobKey.jobKey(name, group)))
+      throw new LanDTException(
+          ExceptionUtils.JOB_NOT_EXIST,
+          String.format(ExceptionUtils.message.get(ExceptionUtils.JOB_NOT_EXIST), name, group));
+    scheduler.deleteJob(JobKey.jobKey(name, group));
+    log.info("Job [name: {}, group: {}] deleted!", name, group);
+  }
+
+  @Override
+  public void pauseJob(String name, String group) throws LanDTException, SchedulerException {
+    if (!scheduler.checkExists(JobKey.jobKey(name, group)))
+      throw new LanDTException(
+          ExceptionUtils.JOB_NOT_EXIST,
+          String.format(ExceptionUtils.message.get(ExceptionUtils.JOB_NOT_EXIST), name, group));
+    scheduler.pauseJob(JobKey.jobKey(name, group));
+    log.info("Job [name: {}, group: {}] paused!", name, group);
   }
 }

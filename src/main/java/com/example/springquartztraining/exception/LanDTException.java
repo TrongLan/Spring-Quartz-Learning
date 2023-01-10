@@ -1,20 +1,16 @@
 package com.example.springquartztraining.exception;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@AllArgsConstructor
-@NoArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @Setter
 public class LanDTException extends Exception {
-  private String code;
-  private String message;
+  private final String code;
+  private final String message;
 
   public Map<String, String> errorMessage() {
     Map<String, String> err = new HashMap<>();

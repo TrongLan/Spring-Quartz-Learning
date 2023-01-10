@@ -15,5 +15,6 @@ public class TriggerDTO {
   private String triggerName;
   private String jobName;
   private String jobGroup;
+  private String description;
   private ScheduleRequest scheduleRequest;
 }

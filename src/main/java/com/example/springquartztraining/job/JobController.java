@@ -1,7 +1,6 @@
 package com.example.springquartztraining.job;
 
 import com.example.springquartztraining.exception.LanDTException;
-import com.example.springquartztraining.trigger.TriggerDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.SchedulerException;
@@ -38,5 +37,31 @@ public class JobController {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
     return new ResponseEntity<>(HttpStatus.CREATED);
+  }
+
+  @GetMapping(value = "/pause-job/{name}/{group}")
+  public ResponseEntity<Object> pauseJob(@PathVariable String name, @PathVariable String group) {
+    try {
+      jobService.pauseJob(name, group);
+    } catch (LanDTException e) {
+      return new ResponseEntity<>(e.errorMessage(), HttpStatus.BAD_REQUEST);
+    } catch (Exception e) {
+      log.error(e.getMessage());
+      return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    return new ResponseEntity<>(HttpStatus.OK);
+  }
+
+  @DeleteMapping(value = "/delete-job/{name}/{group}")
+  public ResponseEntity<Object> deleteJob(@PathVariable String name, @PathVariable String group) {
+    try {
+      jobService.deleteJob(name, group);
+    } catch (LanDTException e) {
+      return new ResponseEntity<>(e.errorMessage(), HttpStatus.BAD_REQUEST);
+    } catch (Exception e) {
+      log.error(e.getMessage());
+      return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
 }
